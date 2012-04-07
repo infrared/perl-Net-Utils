@@ -48,6 +48,8 @@ sub network {
         my ($self,$ip,$mask) = @_;
         
 =cut
+        # TO DO
+        
         # mask in binary
         my $ones = $prefix;
         my $zeros = 32 - $prefix;
@@ -107,7 +109,7 @@ Convert decimal to binary
 sub dec2bin {
         my $decimal = shift;
         my $binary = unpack("B32", pack("N", $decimal));
-        $binary =~ s/^0+(?=\d)//;   # otherwise you'll get leading zeros
+        $binary =~ s/^0+(?=\d)//;
         $binary = sprintf("%08d",$binary);
         return $binary;
 }
@@ -117,10 +119,10 @@ Not sure if this will stay
 
 =cut
 
-sub _dec2bin_nibble {
+sub dec2bin_nibble {
         my $decimal = shift;
         my $binary = unpack("B32", pack("N", $decimal));
-        $binary =~ s/^0+(?=\d)//;   # otherwise you'll get leading zeros
+        $binary =~ s/^0+(?=\d)//;
         $binary = sprintf("%04d",$binary);
         return $binary;
 }
@@ -132,14 +134,17 @@ Validate a netmask
 =cut
 sub valid_mask {
     my ($self,$mask) = @_;
-    print "$mask\n";
+    
      if ($mask =~ /^\/\d{1,2}$/) {
+        # TO DO CIDR stuff
+=cut
         my $cidr
         my $ones = $prefix;
         my $zeros = 32 - $prefix;
         my $binary_mask = 1 x $ones . 0 x $zeros;
         my @mask = split('',$binary_mask);
         # CIDR
+=cut    
     }
     elsif ($mask =~ /^\d{3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
         my (@octets) = ($mask =~ /(\d+)/g);
@@ -151,11 +156,11 @@ sub valid_mask {
             return "valid";
         }
         else {
-            return "invalid";
+            return 0;
         }
     }
     else {
-        return "invalid";
+        return 0;
     }
     
 }
